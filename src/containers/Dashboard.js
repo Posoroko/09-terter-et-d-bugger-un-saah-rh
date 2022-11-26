@@ -52,9 +52,11 @@ export const card = (bill) => {
   `)
 }
 
+// this code def needs some comments!!
 export const cards = (bills) => {
   return bills && bills.length ? bills.map(bill => card(bill)).join("") : ""
 }
+// <=
 
 export const getStatus = (index) => {
   switch (index) {
@@ -89,11 +91,18 @@ export default class {
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
     if (this.counter % 2 === 0) {
+      console.log(this.counter)
       bills.forEach(b => {
+        //all bill cards in blue
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
+        // <=
       })
+      //selected bill card in black
       $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
+      // <=
+      //inject selected card to edit form
       $('.dashboard-right-container div').html(DashboardFormUI(bill))
+      // <=
       $('.vertical-navbar').css({ height: '150vh' })
       this.counter ++
     } else {
@@ -146,7 +155,13 @@ export default class {
     }
 
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      const card = document.getElementById(`open-bill${bill.id}`)
+      //applies the eventlistener only once
+      if(card && !bill.active) {
+        bill.active = true
+        $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      }
+      // <=
     })
 
     return bills
