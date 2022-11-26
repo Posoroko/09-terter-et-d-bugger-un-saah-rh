@@ -13,11 +13,25 @@ export default class NewBill {
     this.fileUrl = null
     this.fileName = null
     this.billId = null
+    //allowed file types for justificatifs. 
+    this.allowedFileTypes = [ 'image/png', 'image/jpg', 'image/jpeg']
+    // <=
     new Logout({ document, localStorage, onNavigate })
   }
+  
   handleChangeFile = e => {
     e.preventDefault()
-    const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+    
+    const input = this.document.querySelector(`input[data-testid="file"]`);
+    const file = input.files[0];
+
+    //Double check after HTML. Back end has to ultimately verify for correct file type
+    if(!this.allowedFileTypes.includes(file.type) || file == null ) {
+      input.value = null
+      return
+    }
+
+
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
     const formData = new FormData()
