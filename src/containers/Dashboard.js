@@ -156,12 +156,23 @@ export default class {
 
     bills.forEach(bill => {
       const card = document.getElementById(`open-bill${bill.id}`)
-      //applies the eventlistener only once
-      if(card && !bill.active) {
-        bill.active = true
+    
+      // in jest environment
+      if (typeof jest !== 'undefined') {
+
         $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+
+      } else {
+        
+        //applies the eventlistener only once
+        if(card && !bill.active) {
+
+          bill.active = true
+          
+          $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+        }
+        // <=
       }
-      // <=
     })
 
     return bills

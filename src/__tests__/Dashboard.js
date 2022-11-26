@@ -91,9 +91,10 @@ describe('Given I am connected as an Admin', () => {
     })
   })
 
-  describe('When I am on Dashboard page and I click on edit icon of a card', () => {
-    test('Then, right form should be filled',  () => {
+  describe('When I am on Dashboard page and I click on a card', () => {
+    test('Then, right form should be filled',  async () => {
 
+      
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname })
       }

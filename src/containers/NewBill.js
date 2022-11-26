@@ -13,9 +13,7 @@ export default class NewBill {
     this.fileUrl = null
     this.fileName = null
     this.billId = null
-    //allowed file types for justificatifs. 
-    this.allowedFileTypes = [ 'image/png', 'image/jpg', 'image/jpeg']
-    // <=
+    
     new Logout({ document, localStorage, onNavigate })
   }
   
@@ -24,12 +22,15 @@ export default class NewBill {
     
     const input = this.document.querySelector(`input[data-testid="file"]`);
     const file = input.files[0];
-
+    //allowed file types for justificatifs. 
+    const allowedFileTypes = [ 'image/png', 'image/jpg', 'image/jpeg']
+    // <=
     //Double check after HTML. Back end has to ultimately verify for correct file type
-    if(!this.allowedFileTypes.includes(file.type) || file == null ) {
-      input.value = null
+    if(!allowedFileTypes.includes(file.type) || file == null ) {
+      input.files.pop();
       return
     }
+    // <=
 
 
     const filePath = e.target.value.split(/\\/g)
