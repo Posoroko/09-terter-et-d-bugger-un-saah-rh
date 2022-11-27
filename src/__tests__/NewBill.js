@@ -3,14 +3,14 @@
  */
 
 import { fireEvent, screen, waitFor } from "@testing-library/dom"
-import store from "../app/Store.js"
+import store from "../app/Store.js";
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
 import { data } from "jquery"
 import { ROUTES_PATH} from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
 import router from "../app/Router.js";
-// import { inputValueAfterFileDrop } from '../fixtures/newBill.js';
+import { bills } from '../fixtures/bills.js'
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
@@ -51,6 +51,15 @@ describe("Given I am connected as an employee", () => {
       
     })
     
+  })
+
+  describe("when I click on 'nouvelle note de frais' ", () => {
+    test("then, the form should be shown", () => {
+
+
+
+
+    })
   })
 })
 
