@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, screen, waitFor } from "@testing-library/dom"
+import { fireEvent, screen, wait, waitFor } from "@testing-library/dom"
 import store from "../app/Store.js";
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
@@ -41,23 +41,57 @@ describe("Given I am connected as an employee", () => {
       const newBill = new NewBill({ document, onNavigate, store, localStorageMock });
       const handleChangeFile = jest.fn(() => newBill.handleChangeFile);
 
+
       const input = screen.getByTestId("file");
       const file = new File( ["Pizza is love."],  "pizza.txt",  { type: "text/plain" } );
       input.addEventListener("change", handleChangeFile);
       fireEvent.change( input, { target: { files: [ file ] }});
       
-      expect(handleChangeFile).toBeCalled();
+      
+      expect(handleChangeFile).toHaveBeenCalledTimes(1);
       expect(input.files).toHaveLength(0);
       
     })
     
+    
+  })
+  describe("when I selected a file", () => {
+    test("then, the input should contain 1 file", async () => {
+      const html = NewBillUI();
+      document.body.innerHTML = html;
+
+      const newBill = new NewBill({ document, onNavigate, store, localStorageMock });
+      const handleChangeFile = jest.fn(() => newBill.handleChangeFile);
+
+
+      const input = screen.getByTestId("file");
+      const file = new File( ["Pizza is love."],  "pizza.jpg",  { type: "image/jpg" } );
+      input.addEventListener("change", handleChangeFile);
+      fireEvent.change( input, { target: { files: [ file ] }});
+      
+      
+      expect(handleChangeFile).toHaveBeenCalledTimes(1);
+      expect(input.files).toHaveLength(1);
+      
+    })
+    
+    
   })
 
-  describe("when I click on 'nouvelle note de frais' ", () => {
-    test("then, the form should be shown", () => {
+  describe('When I submit the form to create a new bill', () => {
+    test('Then, I should be taken to the bills page', async () => {
+      const newBillContainer = new NewBill({ document, onNavigate, store, localStorage });
 
 
+      const handleSubmit = jest.fn(newBillContainer.handleSubmit);
+      const form = screen.getByTestId('form-new-bill');
+      form.addEventListener('submit', handleSubmit);
+      fireEvent.submit(form);
 
+      expect(handleSubmit).toHaveBeenCalled();
+
+      setTimeout(() => {
+        expect(onNavigate).toHaveBeenCalledWith(ROUTES_PATH['Bills'])}, 1000);
 
     })
   })

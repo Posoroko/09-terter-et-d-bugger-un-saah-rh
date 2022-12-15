@@ -28,8 +28,7 @@ describe("Given I am connected as an employee", () => {
       window.onNavigate(ROUTES_PATH.Bills)
       await waitFor(() => screen.getByTestId('icon-window'))
       const windowIcon = screen.getByTestId('icon-window')
-      // const styles = getComputedStyle(windowIcon)
-      // console.log(windowIcon.classList[0])
+
       expect(windowIcon.classList.contains("active-icon")).toBe(true)
     })
     test("Then bills should be ordered from earliest to latest", () => {
@@ -110,6 +109,10 @@ describe("Given I am connected as an employee", () => {
 
 
 
+  
+    
+    
+
 // test d'intégration GET
 describe("Given I am a user connected as Employee", () => {
 
@@ -131,14 +134,14 @@ describe("Given I am a user connected as Employee", () => {
           screen.getAllByText('Mes notes de frais');
         })
         const text = screen.getAllByText('Mes notes de frais');
+        const shownBills = screen.getAllByTestId('icon-eye')
 
+        //if there are 4 eye icons, there are 4 bills
+        expect(shownBills.length).toBe(4);
         expect(text).toBeTruthy();
 
 
       })
-
-
-
 
     describe("When an error occurs on API", () => {
       

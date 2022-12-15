@@ -23,7 +23,7 @@ export default class NewBill {
     const input = this.document.querySelector(`input[data-testid="file"]`);
     const file = input.files[0];
     //allowed file types for justificatifs. 
-    const allowedFileTypes = [ 'image/png', 'image/jpg', 'image/jpeg']
+    const allowedFileTypes = [ 'image/png', 'image/jpg', 'image/jpeg'];
     // <=
     //Double check after HTML. Back end has to ultimately verify for correct file type
     if(!allowedFileTypes.includes(file.type) || file == null ) {
@@ -57,7 +57,6 @@ export default class NewBill {
   }
   handleSubmit = e => {
     e.preventDefault()
-    console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const email = JSON.parse(localStorage.getItem("user")).email
     const bill = {
       email,
@@ -79,10 +78,7 @@ export default class NewBill {
   // not need to cover this function by tests
   updateBill = (bill) => {
     if (this.store) {
-      this.store
-      .bills()
-      .update({data: JSON.stringify(bill), selector: this.billId})
-      .then(() => {
+      this.store.bills().update({data: JSON.stringify(bill), selector: this.billId}).then(() => {
         this.onNavigate(ROUTES_PATH['Bills'])
       })
       .catch(error => console.error(error))
