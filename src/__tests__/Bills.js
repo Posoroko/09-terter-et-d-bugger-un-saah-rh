@@ -107,17 +107,8 @@ describe("Given I am connected as an employee", () => {
   })
 })
 
-
-
-  
-    
-    
-
 // test d'intégration GET
 describe("Given I am a user connected as Employee", () => {
-
-
-    describe("When I navigate to Bills", () => {
       
       test("the list of bills is shown", async () => {
         localStorage.setItem("user", JSON.stringify({ type: "employee", email: "e@e" }));
@@ -136,14 +127,14 @@ describe("Given I am a user connected as Employee", () => {
         const text = screen.getAllByText('Mes notes de frais');
         const shownBills = screen.getAllByTestId('icon-eye')
 
-        //if there are 4 eye icons, there are 4 bills
         expect(shownBills.length).toBe(4);
         expect(text).toBeTruthy();
 
-
       })
 
-    describe("When an error occurs on API", () => {
+
+
+    describe("When an error occurs with the API", () => {
       
       beforeEach(() => {
         jest.spyOn(mockStore, "bills")
@@ -192,5 +183,8 @@ describe("Given I am a user connected as Employee", () => {
       })
     })
 
-    })
 })
+
+
+//a regular expression for date format
+

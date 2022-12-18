@@ -78,13 +78,48 @@ describe("Given I am connected as an employee", () => {
     
   })
 
+//integration post
   describe('When I submit the form to create a new bill', () => {
     test('Then, I should be taken to the bills page', async () => {
-      const newBillContainer = new NewBill({ document, onNavigate, store, localStorage });
+        const newBillContainer = new NewBill({ document, onNavigate, store, localStorage });
 
+        const newBillsUI = NewBillUI();
+        document.body.innerHTML = newBillsUI;
+        const form = screen.getByTestId('form-new-bill');
+        const file = new File(["pizza"], "pizza.png", { type: "image/png" });
+        const fileInput = screen.getByTestId('file');
+        fireEvent.change(fileInput, { target: { files: [file] } });
+        const typeInput = screen.getByTestId('expense-type');
+        fireEvent.change(typeInput, {
+            target: { value: 'Restaurants et bars' },
+        });
+        const nameInput = screen.getByTestId('expense-name');
+        fireEvent.change(nameInput, {
+            target: { value: 'pizza' },
+        });
+        
+        const dateInput = screen.getByTestId('datepicker');
+        fireEvent.change(dateInput, {
+            target: { value: '2021-04-06' },
+        });
+        const amountInput = screen.getByTestId('amount');
+        fireEvent.change(amountInput, {
+            target: { value: 20 },
+        });
+        const vatInput = screen.getByTestId('pct');
+        fireEvent.change(vatInput, {
+            target: { value: 20 },
+        });
+        const pctInput = screen.getByTestId('pct');
+        fireEvent.change(pctInput, {
+            target: { value: 0 },
+        });
+        const commentaryInput = screen.getByTestId('commentary');
+        fireEvent.change(commentaryInput, {
+            target: { value: 'La meilleure pizza dans tout le grans-ouest!' },
+        });
 
       const handleSubmit = jest.fn(newBillContainer.handleSubmit);
-      const form = screen.getByTestId('form-new-bill');
       form.addEventListener('submit', handleSubmit);
       fireEvent.submit(form);
 
