@@ -2,18 +2,19 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, screen, wait, waitFor } from "@testing-library/dom"
+import { fireEvent, screen, waitFor } from "@testing-library/dom"
 import store from "../app/Store.js";
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
-import { data } from "jquery"
 import { ROUTES_PATH} from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
 import router from "../app/Router.js";
-import { bills } from '../fixtures/bills.js'
+
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
+
+//added after this
     test("Then, the envelope icon in the vertical layout should be highlighted", async () => {
 
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
@@ -30,6 +31,7 @@ describe("Given I am connected as an employee", () => {
       const mailIcon = screen.getByTestId('icon-window');
 
       expect(mailIcon.classList.contains('active-icon')).toBe(true);
+
     })
   })
 
@@ -55,7 +57,7 @@ describe("Given I am connected as an employee", () => {
     
     
   })
-  describe("when I selected a file", () => {
+  describe("when I selected a file of an accepted format", () => {
     test("then, the input should contain 1 file", async () => {
       const html = NewBillUI();
       document.body.innerHTML = html;
@@ -86,9 +88,11 @@ describe("Given I am connected as an employee", () => {
         const newBillsUI = NewBillUI();
         document.body.innerHTML = newBillsUI;
         const form = screen.getByTestId('form-new-bill');
+        
         const file = new File(["pizza"], "pizza.png", { type: "image/png" });
         const fileInput = screen.getByTestId('file');
         fireEvent.change(fileInput, { target: { files: [file] } });
+        
         const typeInput = screen.getByTestId('expense-type');
         fireEvent.change(typeInput, {
             target: { value: 'Restaurants et bars' },
