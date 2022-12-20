@@ -52,11 +52,11 @@ export const card = (bill) => {
   `)
 }
 
-// this code def needs some comments!!
+
 export const cards = (bills) => {
   return bills && bills.length ? bills.map(bill => card(bill)).join("") : ""
 }
-// <=
+
 
 export const getStatus = (index) => {
   switch (index) {
@@ -154,6 +154,10 @@ export default class {
       this.counter ++
     }
 
+//     bills.forEach(bill => {
+//       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+//     })
+
     bills.forEach(bill => {
       const card = document.getElementById(`open-bill${bill.id}`)
     
@@ -167,7 +171,7 @@ export default class {
         //applies the eventlistener only once
         if(card && !bill.active) {
 
-          bill.active = true
+          bill.active = true //meaning the bill has already been opened
           
           $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
         }
